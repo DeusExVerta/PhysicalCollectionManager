@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +12,18 @@
 	<header>Collections</header>
 	<!-- th:each collection in collections where user == user, paginated 10 per page. -->
 	<table>
-		<th>
-			<td>name</td><td>item-type</td>
-		</th>
-		<tr>
-		<td></td><td></td>
-		</tr>
+		<thead>
+            <tr>
+                <th>Collection Name</th>
+                <th>Item Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each = "itemCollection : ${itemCollections}">
+                <td th:text = "${itemCollection.name}"></td>
+                <td th:text = "${itemCollection.itemType.name}"></td>
+            </tr>
+        </tbody>
 	</table>
 </body>
 </html>

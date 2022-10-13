@@ -1,6 +1,8 @@
 package com.Howard.service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.Howard.dto.UserDTO;
 import com.Howard.model.User;
+import com.Howard.model.Role;
 import com.Howard.repository.UserRepository;
 
 public class UserServiceImplementation implements UserService {
@@ -26,7 +29,17 @@ public class UserServiceImplementation implements UserService {
 	public void save(UserDTO registration) {
 		User user = new User();
 		user.setEmail(registration.getEmail());
-		user.setUserRoles(registration.getRoles());
+		Set<Role> roles = registration.getRoles();
+		if(roles==null) 
+		{
+			roles = new HashSet<Role>();
+		}
+		if(roles.isEmpty()) {
+			Role role = new Role();
+			role.setName("ROLE_USER");
+			roles.add(role);	
+		}
+		user.setUserRoles(roles);
 		user.setPassword(passwordEncoder.encode(registration.getPassword()));
 		userRepository.save(user);
 	}
