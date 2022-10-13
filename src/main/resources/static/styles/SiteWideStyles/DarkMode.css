@@ -1,0 +1,10 @@
+html {
+    background-color: gray;
+    height: 100vh;
+    width: 90vw;
+}
+html *{
+    font-family: "Times New Roman", Times, serif;
+    color:black;
+    border-color:  darkslategray;
+}

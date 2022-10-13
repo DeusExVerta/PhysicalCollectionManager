@@ -1,0 +1,35 @@
+html {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header
+{
+    text-transform: uppercase;
+    font-size: 10vh;
+    text-align: center;
+}
+
+form
+{
+    width: 25vw;
+    background: black;
+    padding: 5%;
+    display: flex;
+    justify-content: center;
+    border-radius: 20%;
+}
+
+.formbody
+{
+    height: 100%;
+    width:85%;
+    background: linear-gradient(180deg, Grey 0%, darkslategrey 50%, Grey 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    justify-content: space-evenly;
+    border-radius: 10%;
+}

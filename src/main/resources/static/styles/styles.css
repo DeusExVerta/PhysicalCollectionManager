@@ -1,0 +1,103 @@
+header{
+    font-size: xx-large;
+}
+
+body {
+    margin:0;
+}
+
+.layout
+{
+    display:grid;
+    grid-template-rows: 15% 75% 5%;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-areas: "header header header" "nav main table" "footer footer footer";
+}
+
+nav
+{
+    padding:10%;
+    display: flex;   
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+nav button
+{
+    font-size: medium;
+    background-color: bisque;
+}
+
+.dropdown button{
+    width: 100%;
+}
+
+.content
+{
+    display: none;
+    position: absolute;
+    background-color: bisque;
+}
+
+.dropdown:hover .content
+{
+    display: block;
+    width: 14.5%;
+}
+
+.dropdown .content a {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+main
+{
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 0.5vw;
+    margin: 1vh;
+}
+
+main ul
+{
+    border: 2px solid black;
+    border-radius: 10%;
+    display: flex;
+    gap: 1vw;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding:1vh;
+}
+
+main img {
+    height: 100%;
+    width: 100%;
+}
+
+main li
+{
+    height: 40vh;
+    width: 40vh;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+table
+{
+    border-collapse: collapse;
+    border-width: 5px;
+    border-style: solid;
+    margin: 5px;
+}
+
+table tr{
+    border-bottom: 2px solid black;
+}
+
+footer{
+    font-size: xx-small;
+    background-color: #F2f3B5;
+}

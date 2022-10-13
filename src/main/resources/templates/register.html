@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--      TODO:change to user data point so darkmode preference is maintained. -->
+    <link id="mode" rel="stylesheet" href="/styles/SiteWideStyles/LightMode.css">
+    <link rel="stylesheet" href="/styles/loginStyle.css">
+    
+    <title>Registration Page</title>
+</head>
+<body>
+    <header>Register</header>
+    <!-- TODO: Modify to Thymeleaf form -->
+    <form  th:action="@{/register/save}"
+            th:object="${user}">
+        <div class="formbody">
+            <label for="uname">Email:</label>
+            <input type="text" id="uname" name="uname" placeholder = "Enter Email" th:field="*{email}"><br>
+            <label for="vuname">Validate Email:</label>
+            <input type="text" id="vuname" name="uname"><br>
+            <text id="validemail" style="color:red"></text>
+            <label for="pword">Password:</label>
+            <input type="password" id="pword" name="pword" placeholder = "Enter Password" th:field="*{password}"><br>
+            <label for="vpword">Validate Password:</label>
+            <input type="password" id="vpword" name="pword"><br>
+            <text id="validpw" style="color:red" ></text>
+            <button id="submit">Login</button>
+        </div>
+    </form>
+    <button id="darkmode">Dark-mode</button><span>Already registered? <a th:href="@{/login}">Login here</a></span>
+</body>
+<script src="/scripts/validation.js"></script>
+<script src="/scripts/darkmode.js"></script>
+</html>
