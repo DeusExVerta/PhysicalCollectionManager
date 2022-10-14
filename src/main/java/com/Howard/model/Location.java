@@ -1,6 +1,11 @@
 package com.Howard.model;
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -9,7 +14,12 @@ import lombok.Data;
 @Table
 @Data
 public class Location {
-	private User user;
+	@Id
 	private int id;
+	
+	@ManyToOne
+	private User user;
+		
+	@Column
 	private String Name, Description;
 }
