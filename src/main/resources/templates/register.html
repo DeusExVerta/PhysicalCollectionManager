@@ -14,20 +14,21 @@
 <body>
     <header>Register</header>
     <!-- TODO: Modify to Thymeleaf form -->
-    <form  th:action="@{/register/save}"
+    <form method="post"
+    		th:action="@{/register/save}"
             th:object="${user}">
         <div class="formbody">
             <label for="uname">Email:</label>
-            <input type="text" id="uname" name="uname" placeholder = "Enter Email" th:field="*{email}"><br>
+            <input type="text" id="email"  placeholder = "Enter Email" th:field="*{email}"><br>
             <label for="vuname">Validate Email:</label>
-            <input type="text" id="vuname" name="uname"><br>
+            <input type="text" id="vemail" name="email"><br>
             <text id="validemail" style="color:red"></text>
             <label for="pword">Password:</label>
-            <input type="password" id="pword" name="pword" placeholder = "Enter Password" th:field="*{password}"><br>
+            <input type="password" id="password" placeholder = "Enter Password" th:field="*{password}"><br>
             <label for="vpword">Validate Password:</label>
-            <input type="password" id="vpword" name="pword"><br>
+            <input type="password" id="vpassword" name="password"><br>
             <text id="validpw" style="color:red" ></text>
-            <button id="submit">Login</button>
+            <button id="submit">Register</button>
         </div>
     </form>
     <button id="darkmode">Dark-mode</button><span>Already registered?<a th:href="@{/login}">Login here</a></span>

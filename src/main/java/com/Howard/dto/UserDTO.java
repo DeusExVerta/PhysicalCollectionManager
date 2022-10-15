@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-import com.Howard.model.Role;
+import com.Howard.entity.Role;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

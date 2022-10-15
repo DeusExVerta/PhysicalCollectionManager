@@ -5,16 +5,22 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.Howard.dto.UserDTO;
-import com.Howard.model.User;
-import com.Howard.model.Role;
+import com.Howard.entity.Role;
+import com.Howard.entity.User;
 import com.Howard.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
 public class UserServiceImplementation implements UserService {
 
 	private UserRepository userRepository;
@@ -39,14 +45,14 @@ public class UserServiceImplementation implements UserService {
 			role.setName("ROLE_USER");
 			roles.add(role);	
 		}
-		user.setUserRoles(roles);
+		user.setRoles(roles);
 		user.setPassword(passwordEncoder.encode(registration.getPassword()));
 		userRepository.save(user);
 	}
 
 	@Override
-	public List<UserDTO> findAllUsers() {
-	     return userRepository.findAll().stream()
+	public List<UserDTO> findAllUsers(Pageable pageable) {
+	     return userRepository.findAll(pageable).stream()
 	                .map((user) -> mapToUserDto(user))
 	                .collect(Collectors.toList());	
 	}
@@ -63,7 +69,7 @@ public class UserServiceImplementation implements UserService {
         if(user != null){
             return new org.springframework.security.core.userdetails.User(user.getEmail()
                     , user.getPassword(),
-                    user.getUserRoles().stream()
+                    user.getRoles().stream()
                             .map((role) -> new SimpleGrantedAuthority(role.getName()))
                             .collect(Collectors.toList()));
         }else {

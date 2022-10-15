@@ -16,9 +16,7 @@ import lombok.NonNull;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration{
-	
-	@Autowired
-	private @NonNull UserService userService;
+
 
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
