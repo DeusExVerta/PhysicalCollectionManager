@@ -14,11 +14,11 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-	private Long id;
+	
     @NotEmpty(message = "Email should not be empty")
     @Email
     private @NonNull String email;
     @NotEmpty(message = "Password should be empty")
     private @NonNull String password;
-    private @NonNull Set<Role> roles;
+    private Set<Role> roles;
 }

@@ -1,5 +1,5 @@
 const emailRegEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{1,3}/;
-const emailInput = document.getElementById("uname");
+const emailInput = document.getElementById("email");
 const responseText = document.getElementById("responsetext");
 const submitButton = document.getElementById("submit");
 function isValidEmail() {

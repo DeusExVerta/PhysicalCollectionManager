@@ -10,7 +10,7 @@
 </head>
 <body>
 	<header>Collections</header>
-	<!-- th:each collection in collections where user == user, paginated 10 per page. -->
+	<div th:if="${!pages.isEmpty()}" th:each="pageNumber:${pages}"><a th:href=@{/collections(page=${pageNumber})}></a></div>
 	<table>
 		<thead>
             <tr>
@@ -19,11 +19,27 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each = "itemCollection : ${itemCollections}">
-                <td th:text = "${itemCollection.name}"></td>
-                <td th:text = "${itemCollection.itemType.name}"></td>
+            <tr th:each = "collection : ${collections}">
+                <td th:text = "${collection.name}"></td>
+                <td th:text = "${collection.itemType.name}"></td>
             </tr>
         </tbody>
 	</table>
+	
+	<form method="put" th:action="@{/collections}">
+		<div class="formbody">
+			<label for="name">Name:</label> 
+			<input type="text" 
+					th:feild = "*{name}"
+					placeholder = "Enter collection name"
+					><br>
+			<label for="ItemType">Type:</label> 
+			<select th:feild="*{ItemType}">
+				<option th:each = "type:${types}" th:value = "${type.name}" th:text="${type.name}"></option>
+			</select>
+			<button id="submit">Add Collection</button>
+		</div>
+	</form>
+	
 </body>
 </html>

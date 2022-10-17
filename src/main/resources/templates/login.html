@@ -12,17 +12,27 @@
 </head>
 <body>
 	<!-- TODO: Modify to Thymeleaf form -->
+	<div th:if="${param.error}">
+         <p id="loginError" style="color:red">Invalid Email or Password</p>
+    </div>
 	<div th:if="${param.logout}">
 		<div class="logout_success">You have been logged out.</div>
 	</div>
 	<header>Login</header>
 	<form method="post" th:action="@{/login}">
 		<div class="formbody">
-			<label for="uname">UserName:</label> <input type="text" id="email"
-				th:feild="*{email}"><br>
+			<label for="username">UserName:</label> 
+			<input type="text" 
+					id="username"
+					name="username"
+					placeholder = "Enter email"
+					><br>
 			<text id="responsetext" style="color:red"></text>
-			<label for="pword">Password:</label> <input type="password"
-				id="pword" th:feild="*{password}"><br>
+			<label for="password">Password:</label> 
+			<input type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter password"><br>
 			<button id="submit">Login</button>
 		</div>
 	</form>

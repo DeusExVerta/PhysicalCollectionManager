@@ -1,10 +1,10 @@
 package com.Howard.service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +18,8 @@ import com.Howard.entity.User;
 import com.Howard.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserServiceImplementation implements UserService {
@@ -28,6 +29,7 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User findByEmail(String email) {
+		log.info("finding user with email "+email);
 		return userRepository.findByEmail(email);
 	}
 
@@ -50,11 +52,10 @@ public class UserServiceImplementation implements UserService {
 		userRepository.save(user);
 	}
 
+	//TODO: determine how to use DTO for paginated results.
 	@Override
-	public List<UserDTO> findAllUsers(Pageable pageable) {
-	     return userRepository.findAll(pageable).stream()
-	                .map((user) -> mapToUserDto(user))
-	                .collect(Collectors.toList());	
+	public Page<User> findAllUsers(Pageable pageable) {
+	     return userRepository.findAll(pageable);
 	}
 	
 	private UserDTO mapToUserDto(User user){
@@ -65,14 +66,16 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(username);
+		User user = findByEmail(username);
         if(user != null){
+        	log.info(String.format("found user %s with password %s",user.getEmail(),user.getPassword()));
             return new org.springframework.security.core.userdetails.User(user.getEmail()
                     , user.getPassword(),
                     user.getRoles().stream()
                             .map((role) -> new SimpleGrantedAuthority(role.getName()))
                             .collect(Collectors.toList()));
         }else {
+        	log.error("Username not found in database");
             throw new UsernameNotFoundException("Invalid email or password");
         }
 	}

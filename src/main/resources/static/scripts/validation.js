@@ -1,5 +1,5 @@
 const emailRegEx = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{1,3}/;
-const pWordInputs = document.getElementsByName("password");
+const pWordInputs = [document.getElementById("password"),document.getElementById("vpassword")];
 const submitButton = document.getElementById("submit");
 function toggleRedoutline(array,toggle)
 {
@@ -30,7 +30,7 @@ for (let i = 0; i < pWordInputs.length; i++) {
 }
 
 
-const emailInputs = document.getElementsByName("email");
+const emailInputs = [document.getElementById("email"),document.getElementById("vemail")];
 function validateEmail() {
     let responseText = document.getElementById("validemail");
     if (!emailRegEx.test(emailInputs[0].value)) {

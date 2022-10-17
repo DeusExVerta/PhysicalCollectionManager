@@ -1,9 +1,8 @@
 package com.Howard.service;
 
 
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.Howard.dto.UserDTO;
@@ -15,5 +14,5 @@ public interface UserService extends UserDetailsService {
 
 	void save(UserDTO registration);
 	
-	List<UserDTO> findAllUsers(Pageable pageable);
+	Slice<User> findAllUsers(Pageable pageable);
 }
