@@ -10,36 +10,47 @@
 </head>
 <body>
 	<header>Collections</header>
-	<div th:if="${!pages.isEmpty()}" th:each="pageNumber:${pages}"><a th:href=@{/collections(page=${pageNumber})}></a></div>
+	<div th:if="${!pages.isEmpty()}" th:each="pageNumber:${pages}"><a th:text="${pageNumber}" th:href=@{/collections(page=${pageNumber})}></a></div>
 	<table>
 		<thead>
             <tr>
                 <th>Collection Name</th>
                 <th>Item Type</th>
+                <th>Delete Collection</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each = "collection : ${collections}">
-                <td th:text = "${collection.name}"></td>
-                <td th:text = "${collection.itemType.name}"></td>
+                <td><a th:text = "${collection.name}" th:href="@{'/collections/'+${collection.name}}"></a></td>
+                <td th:text = "${collection.allowedType.name}"></td>
+                <td><form th:method="DELETE" th:href="@{/collections/${collection.name}}"><button id="submit">delete</button></form></td>
             </tr>
         </tbody>
 	</table>
 	
-	<form method="put" th:action="@{/collections}">
-		<div class="formbody">
+	<div th:if="${param.error}">
+         <p id="putErr" style="color:red">Error adding collection</p>
+    </div>
+	<form th:method="PUT" th:action="@{/collections}">
 			<label for="name">Name:</label> 
 			<input type="text" 
-					th:feild = "*{name}"
+					id="name"
+					name="name"
 					placeholder = "Enter collection name"
-					><br>
-			<label for="ItemType">Type:</label> 
-			<select th:feild="*{ItemType}">
+					>
+			<label for="itemType">Type:</label> 
+			<select id="itemType" name="itemType">
 				<option th:each = "type:${types}" th:value = "${type.name}" th:text="${type.name}"></option>
 			</select>
 			<button id="submit">Add Collection</button>
-		</div>
 	</form>
-	
+	<form th:method="PUT" th:action="@{/type}">
+		<label for="name">Name:</label><input type="text" 
+					id="name"
+					name="name"
+					placeholder = "Enter type name"
+					>
+		<button id="submit">Add Item Type</button>
+	</form>
 </body>
 </html>

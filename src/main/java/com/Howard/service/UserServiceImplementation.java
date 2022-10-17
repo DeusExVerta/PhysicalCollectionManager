@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.Howard.dto.UserDTO;
 import com.Howard.entity.Role;
 import com.Howard.entity.User;
+import com.Howard.repository.RoleRepository;
 import com.Howard.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImplementation implements UserService {
 
 	private UserRepository userRepository;
+	private RoleRepository roleRepo;
     private PasswordEncoder passwordEncoder;
 
 	@Override
@@ -43,8 +45,11 @@ public class UserServiceImplementation implements UserService {
 			roles = new HashSet<Role>();
 		}
 		if(roles.isEmpty()) {
-			Role role = new Role();
-			role.setName("ROLE_USER");
+			Role role = roleRepo.findByName("ROLE_USER");
+			if(role==null) 
+			{
+				role=new Role("ROLE_USER");
+			}
 			roles.add(role);	
 		}
 		user.setRoles(roles);

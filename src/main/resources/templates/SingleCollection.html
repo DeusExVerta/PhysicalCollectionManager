@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each = "collectedItem : ${items}">
+            <tr th:each = "collectedItem : ${$itemCollection}">
                 <td th:text = "${collectedItem.name}"></td>
                 <td th:text = "${collectedItem.location}"></td>
                 <td th:text = "${collectedItem.price}"></td>
@@ -30,5 +30,8 @@
             </tr>
         </tbody>
 	</table>
+	<form th:method="DELETE" th:href="@{/collections/${collection.name}}">
+		<button id="submit">Delete this collection</button>
+	</form>
 </body>
 </html>
