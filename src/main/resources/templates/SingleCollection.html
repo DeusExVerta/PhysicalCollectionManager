@@ -9,7 +9,7 @@
     <title>Collections Page</title>
 </head>
 <body>
-	<header th:text="$itemCollection.name"></header>
+	<header th:text="${itemCollection.name}"></header>
 	<table>
 		<thead>
             <tr>
@@ -30,7 +30,7 @@
             </tr>
         </tbody>
 	</table>
-	<form th:method="DELETE" th:href="@{/collections/${collection.name}}">
+	<form th:method="DELETE" th:action="@{'/collections/'+${itemCollection.name}}">
 		<button id="submit">Delete this collection</button>
 	</form>
 </body>

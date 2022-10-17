@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.Howard.dto.UserDTO;
 import com.Howard.entity.Role;
 import com.Howard.entity.User;
 import com.Howard.repository.RoleRepository;
@@ -36,10 +35,8 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public void save(UserDTO registration) {
-		User user = new User();
-		user.setEmail(registration.getEmail());
-		Set<Role> roles = registration.getRoles();
+	public void save(User user) {
+		Set<Role> roles = user.getRoles();
 		if(roles==null) 
 		{
 			roles = new HashSet<Role>();
@@ -53,7 +50,7 @@ public class UserServiceImplementation implements UserService {
 			roles.add(role);	
 		}
 		user.setRoles(roles);
-		user.setPassword(passwordEncoder.encode(registration.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 
@@ -62,12 +59,6 @@ public class UserServiceImplementation implements UserService {
 	public Page<User> findAllUsers(Pageable pageable) {
 	     return userRepository.findAll(pageable);
 	}
-	
-	private UserDTO mapToUserDto(User user){
-        UserDTO userDto = new UserDTO();
-        userDto.setEmail(user.getEmail());
-        return userDto;
-    }
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
