@@ -30,7 +30,7 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User findByEmail(String email) {
-		log.info("finding user with email "+email);
+		log.info("finding user with email " + email);
 		return userRepository.findByEmail(email);
 	}
 
@@ -51,6 +51,7 @@ public class UserServiceImplementation implements UserService {
 		}
 		user.setRoles(roles);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		log.info("Saving user "+ user);
 		userRepository.save(user);
 	}
 

@@ -18,15 +18,15 @@ public class SecurityConfiguration{
                 .authorizeRequests()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/index").permitAll()
-                .antMatchers("/collections").hasRole("USER")
-                .antMatchers("/collection").hasRole("USER")
+                .antMatchers("/Inventorys").hasRole("USER")
+                .antMatchers("/Inventory").hasRole("USER")
                 .antMatchers("/users").hasRole("ADMIN")
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/collections")
+                                .defaultSuccessUrl("/Inventorys")
                                 .permitAll()
                 ).logout(
                         logout -> logout
