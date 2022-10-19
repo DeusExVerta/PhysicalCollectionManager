@@ -76,5 +76,10 @@ public class UserServiceImplementation implements UserService {
             throw new UsernameNotFoundException("Invalid email or password");
         }
 	}
+	
+//	public void update(User user) 
+//	{
+//		userRepository.update(user);
+//	}
 
 }

@@ -14,4 +14,6 @@ public interface UserService extends UserDetailsService {
 	void save(User user);
 	
 	Page<User> findAllUsers(Pageable pageable);
+	
+//	void update(User user);
 }
