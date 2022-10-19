@@ -20,7 +20,6 @@ public class SecurityConfiguration{
                 .antMatchers("/index").permitAll()
                 .antMatchers("/Inventorys").hasRole("USER")
                 .antMatchers("/Inventory").hasRole("USER")
-                .antMatchers("/users").hasRole("ADMIN")
                 .and()
                 .formLogin(
                         form -> form
