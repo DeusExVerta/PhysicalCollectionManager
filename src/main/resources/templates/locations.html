@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link id="mode" rel="stylesheet"
+	href="/styles/CenterStyle.css">
+<title>Locations Management Page</title>
+</head>
+<body>
+<div class="flex-and-center-column">
+		<div class="navbar">
+			<ul>
+				<li><a href="/Inventorys">My Inventorys</a><li>
+				<li><a href="/Locations">My Locationz</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+	<header>Locations</header>
+	<div th:if="${!pages.isEmpty()}" th:each="pageNumber:${pages}">
+		<a th:text="${pageNumber}" th:href=@{/locations(page=${pageNumber})}></a>
+	</div>
+	<table>
+		<thead>
+			<tr>
+				<th>Location Name</th>
+				<th>Location Description</th>
+				<th>Delete Location</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="loc : ${locations}">
+				<td th:text="${loc.name}"></td>
+				<td th:text="${loc.description}"></td>
+				<td><form th:method="DELETE"
+						th:action="@{'/Location/'+${loc.name}}">
+						<button id="submit" th:text="'Delete '+ ${loc.name}"></button>
+					</form></td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:if="${param.error}">
+		<p id="putErr" style="color: red">Something went wrong</p>
+	</div>
+	<form th:method="PUT" action="/Location" th:object="${location}">
+		<label for="name">Name:</label>
+		<input type="text" th:field="*{name}" placeholder="Enter name"></input>
+		<label for="description">Description:</label>
+		<input type="text" th:field="*{description}" placeholder="Enter description"></input>
+		<button id="submit">Add Location</button>
+	</form>
+	</div>
+</body>
+</html>

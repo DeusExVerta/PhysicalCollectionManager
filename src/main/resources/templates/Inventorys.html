@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  TODO:change to user data point so darkmode preference is maintained. -->
+<link id="mode" rel="stylesheet"
+	href="/styles/CenterStyle.css">
+<title>Inventorys Page</title>
+</head>
+<body>
+<div class="flex-and-center-column">
+	<div class="navbar">
+			<ul>
+				<li><a href="/Inventorys">My Inventorys</a><li>
+				<li><a href="/Locations">My Locationz</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+	<header>Inventorys</header>
+	<div class="pages-label">Pages:
+	<div th:if="${!pages.isEmpty()}" th:each="pageNumber:${pages}">
+		<a th:text="${pageNumber}" th:href=@{/Inventorys(page=${pageNumber})}></a>
+	</div></div>
+	<table>
+		<thead>
+			<tr>
+				<th>Inventory Name</th>
+				<th>Item Type</th>
+				<th>Delete Inventory</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="Inventory : ${Inventorys}">
+				<td><a th:text="${Inventory.name}"
+					th:href="@{'/Inventorys/'+${Inventory.name}}"></a></td>
+				<td th:text="${Inventory.allowedType.name}"></td>
+				<td><form th:method="DELETE"
+						th:action="@{'/Inventorys/'+${Inventory.name}}">
+						<button id="submit" th:text="'Delete '+ ${Inventory.name}"></button>
+					</form></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div th:if="${param.error}">
+		<p id="putErr" style="color: red">Something went wrong</p>
+	</div>
+	<div id="typesNotEmpty" th:if="${!types.isEmpty()}">
+		<form th:method="PUT" th:action="@{/Inventorys}">
+			<label for="name">Name:</label> <input type="text" id="name"
+				name="name" placeholder="Enter Inventory name"> <label
+				for="itemType">Type:</label> 
+				<select id="itemType" name="itemType">
+				<option th:each="type:${types}" th:value="${type.name}"
+					th:text="${type.name}"></option>
+			</select>
+			<button id="submit">Add Inventory</button>
+		</form>
+		<form th:method="DELETE" th:action="@{/type}">
+			<label for="itemType">Type:</label> <select id="itemType"
+				name="itemType">
+				<option th:each="type:${types}" th:value="${type.name}"
+					th:text="${type.name}"></option>
+			</select>
+			<button id="submit">Remove Type</button>
+		</form>
+	</div>
+	<form th:method="PUT" th:action="@{/type}">
+		<label for="name">Name:</label><input type="text" id="name"
+			name="name" placeholder="Enter type name">
+		<button id="submit">Add Item Type</button>
+	</form>
+	</div>
+</body>
+</html>

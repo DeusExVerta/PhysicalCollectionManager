@@ -1,0 +1,89 @@
+html {
+    background-color: gray;
+    height: 100vh;
+}
+
+html *{
+    font-family: "Times New Roman", Times, serif;
+    color:black;
+    border-color: darkslategray;
+}
+
+body
+{
+	margin-top:10%;
+	margin-right:0;
+	margin-left:0;
+	margin-bottom:0;
+	padding:0;
+}
+
+.flex-and-center-column{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+table,th,td
+{
+	border-collapse:collapse;
+	border:1px solid black;
+}
+
+.navbar
+{
+	position:fixed;
+	top:0%;
+	width:100%;
+	padding:10px;
+	background-color:black;
+	display:flex;
+	justify-content:flex-end;
+}
+
+.navbar>ul>li>a
+{
+	color:white;
+	margin:1rem;
+}
+
+.navbar>ul
+{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	display:flex;
+	justify-content:space-around;
+}
+
+.item-page-body
+{
+	display:Grid;
+	grid-template-rows: 1fr 1fr 2fr 1fr;
+	grid-template-areas: "header" 
+						 "image" 
+						 "item-body" 
+						 "footer";  
+}
+
+.header
+{
+	grid-area:header;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+.itemPicture
+{
+	grid-area:image;
+	margin-right:auto;
+	margin-left:auto;
+}
+
+
+
+.delete-button
+{
+	grid-area:footer;
+}

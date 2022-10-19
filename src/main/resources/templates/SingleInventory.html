@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  TODO:change to user data point so darkmode preference is maintained. -->
+<link id="mode" rel="stylesheet"
+	href="/styles/CenterStyle.css">
+<title>Single Inventory Page</title>
+</head>
+<body>
+	<div class="single-inventory-body flex-and-center-column">
+		<div class="navbar">
+			<ul>
+				<li><a href="/Inventorys">My Inventorys</a><li>
+				<li><a href="/Locations">My Locationz</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+		<div class="header" th:text="${Inventory.name}"></div>
+		<table>
+			<thead>
+				<tr>
+					<th>Item Name</th>
+					<th>Location</th>
+					<th>Location Description</th>
+					<th>Price</th>
+					<th>Quality</th>
+					<th>Quantity</th>
+	<!-- 				<th>Image</th> -->
+				</tr>
+			</thead>
+			<tbody th:if="${!Inventory.getItems().isEmpty()}">
+				<tr  th:each="item : ${Inventory.getItems()}">
+					<td><a th:text="${item.name}" th:href="@{'/Inventorys/'+${Inventory.getName()}+'/'+${item.name}}"></a></td>
+					<td th:text="${item.location.name}"></td>
+					<td th:text="${item.location.description}"></td>
+					<td th:text="${item.price}"></td>
+					<td th:text="${item.quality}"></td>
+					<td th:text="${item.quantity}"></td>
+	<!-- 				<td><image th:href="@{collectedItem.ImageURL}"></image></td> -->
+				</tr>
+			</tbody>
+		</table>
+		<div id="userHasLocations" th:if="${!locations.isEmpty()}">
+			<form th:method="PUT" th:object="${InventoryItem}"
+				th:action="@{'/Inventorys/'+${Inventory.name}+'/item'}">
+				<input type="text" th:field="*{name}"></input> 
+				<select	id="locationName" name="locationName">
+					<option 
+						th:each="locationOption:${locations}" 
+						th:value="${locationOption.name}"
+						th:text="${locationOption.name}">
+					</option>
+				</select> 
+				<input type="number" th:field="*{price}"></input> 
+				<select th:field="*{quality}">
+					<option value=1>Near Mint</option>
+					<option value=2>Lightly Used</option>
+					<option value=3>Heavily Used</option>
+					<option value=4>Damaged</option>
+				</select> 
+	<!-- 			<input type="text" -->
+	<!-- 				th:field="*{imgURL}"></input> -->
+				<button id="submit">Add Item to Collection</button>
+			</form>
+		</div>
+		<form th:method="PUT" th:action="@{/Location}" th:object="${location}">
+			<label for="name">Location Name:</label><input type="text" th:field="*{name}"></input>
+			<label for="description">Description:</label><input type="text" th:field="*{description}"></input>
+		<button id="submit">Add Location</button>
+		</form>
+		<form th:method="DELETE"
+			th:action="@{'/Inventorys/'+${Inventory.name}}">
+			<button id="submit">Delete this collection</button>
+		</form>
+	</div>
+</body>
+</html>

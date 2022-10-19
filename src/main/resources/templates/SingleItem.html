@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--  TODO:change to user data point so darkmode preference is maintained. -->
+	<link id="mode" rel="stylesheet"
+		href="/styles/SiteWideStyles/LightMode.css">
+	<link id="mode" rel="stylesheet"
+		href="/styles/CenterStyle.css">
+	<title>Single Item Page</title>
+</head>
+<body>
+	<div class="item-page-body">
+		<div class="navbar">
+			<ul>
+				<li><a href="/Inventorys">My Inventorys</a><li>
+				<li><a href="/Locations">My Locationz</a></li>
+				<li><a href="/logout">logout</a></li>
+			</ul>
+		</div>
+		<div class="header" th:text="${Item.name}"></div>
+		<img class="itemPicture" src="Images/missingImg.jpg">
+		<div class="flex-and-center-column">
+			<p th:text="${Item.inventory.name}"></p>
+			<p th:text="${Item.type.name}"></p>
+			<p th:text="${Item.quantity}"></p>
+			<p th:text="${Item.quality}"></p>
+			<p th:text="${Item.location.name}"></p>
+			<p th:text="${Item.price}"></p>
+		</div>
+		<form class="delete-button" th:method="DELETE"
+			th:action="@{'/Items/'+${Item.name}}">
+			<button id="submit">Delete this Item</button>
+		</form>
+	</div>
+</body>
+</html>
