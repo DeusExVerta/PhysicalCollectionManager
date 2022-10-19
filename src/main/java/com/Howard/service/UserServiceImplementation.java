@@ -55,7 +55,6 @@ public class UserServiceImplementation implements UserService {
 		userRepository.save(user);
 	}
 
-	//TODO: determine how to use DTO for paginated results.
 	@Override
 	public Page<User> findAllUsers(Pageable pageable) {
 	     return userRepository.findAll(pageable);
