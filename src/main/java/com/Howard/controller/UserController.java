@@ -1,24 +1,23 @@
 package com.Howard.controller;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.Howard.entity.User;
 import com.Howard.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+
+/*
+ * Controller for handling user management related endpoints.
+ */
 
 @Slf4j
 @Controller
@@ -27,26 +26,37 @@ public class UserController {
 
 	private UserService userService;
 	
-    // handler method to handle home page request
+    /*
+     * method handling home-page requests redirecting those to login.
+     */
     @GetMapping("/")
     public String home(){
     	log.info("Base url redirect");
         return "login";
     }
     
-    
+    /*
+     * method handling explicit requests for login
+     */
     @GetMapping("/login")
     public String loginPage()
     {
     	return "login";
     }
-        
+    
+    
+    /*
+     * method handling requests for the registration page.
+     */
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         model.addAttribute("user", new User());
         return "register";
     }
     
+    /*
+     * method handling requests to save a new user.
+     */
     @PostMapping("/register/save")
     public String registerUser(@Valid @ModelAttribute("user") User user,BindingResult result,
             Model model) 
@@ -62,13 +72,5 @@ public class UserController {
         }
     	userService.save(user);
     	return "redirect:/register?success";
-    }
-    
-    @GetMapping("/users")
-    public String users(Model model, @RequestParam("page") Optional<Integer> page){
-        model.addAttribute("users", userService.findAllUsers(PageRequest.of(page.orElse(1)-1, 10)));
-        return "users";
-    }
-    
-    
+    }   
 }

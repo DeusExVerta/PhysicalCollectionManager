@@ -16,7 +16,17 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
-
+/*
+ * An entity class describing a user of the application.
+ * 
+ * FIELDS:
+ * email - the users email, this is the unique identifier used to identify this user throughout the aplication
+ * password - the users password, this field is encrypted using BCrypt through our security configuration
+ * itemColections - the set of inventory objects owned by this user
+ * roles - the user roles held by this user, used by our security configuration to control page access.
+ * types - the item types that this user has among their collections
+ * locations - a set of all locations owned by this user
+ */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)

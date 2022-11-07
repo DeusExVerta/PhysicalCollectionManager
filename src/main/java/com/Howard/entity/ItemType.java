@@ -13,6 +13,14 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+/*
+ * Entity class describing an Item Type
+ * 
+ * FIELDS:
+ * name - the name of this item type
+ * user - the set of users who have this item type
+ */
+
 
 @Entity
 @Table

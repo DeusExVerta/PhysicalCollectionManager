@@ -16,6 +16,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
+/*
+ * An entity class describing user roles for use with spring security
+ * 
+ * FIELDS:
+ * name - the name of this role
+ * users - the collection of users with this role.
+ */
+
+
 @Data
 @NoArgsConstructor
 @Entity

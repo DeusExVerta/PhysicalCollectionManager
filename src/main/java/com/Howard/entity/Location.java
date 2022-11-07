@@ -14,7 +14,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+/*
+ * Entity class describing a location for inventory items
+ * 
+ * FIELDS:
+ * user - the user to whom this location belongs
+ * name - the name of this location
+ * description - the full description of this location
+ */
 @Entity
 @Table
 @Data

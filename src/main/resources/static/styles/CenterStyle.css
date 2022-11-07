@@ -60,11 +60,17 @@ table,th,td
 .item-page-body
 {
 	display:Grid;
-	grid-template-rows: 1fr 1fr 2fr 1fr;
+	grid-template-rows: 0.2fr 0.2fr 0.2fr 0.2fr;
 	grid-template-areas: "header" 
 						 "image" 
 						 "item-body" 
 						 "footer";  
+}
+
+.pages-contianer{
+	display: flex;
+	flex-direction:row;
+	justify-content: space-around;
 }
 
 .header
@@ -72,6 +78,7 @@ table,th,td
 	grid-area:header;
 	margin-right:auto;
 	margin-left:auto;
+	font-size:10vh;
 }
 
 .itemPicture

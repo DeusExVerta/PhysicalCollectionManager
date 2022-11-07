@@ -17,6 +17,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+
+
+/*
+ * entity class describing a single inventory containing items of a single type.
+ * 
+ * FEILDS: 
+ * user - user owner of this inventory
+ * name - name of this inventory
+ * allowedType - the ItemType that will be assigned to items in this Inventory.
+ * items - the list of individual items that are contained in this inventory.
+ */
 @Entity
 @Table
 @Data

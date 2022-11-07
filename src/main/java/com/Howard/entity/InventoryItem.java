@@ -15,6 +15,20 @@ import org.hibernate.envers.RelationTargetAuditMode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+
+/*
+ * Entity class describing a single Inventory Item
+ * 
+ * FIELDS:
+ * inventory - the inventory object this item belongs too.
+ * name - the name of this item
+ * itemType - the type of this item
+ * quantity - the total number of this item
+ * quality - the quality of this item
+ * location - the location of this item
+ * price - the price of this item
+ */
+
 @Entity
 @Table
 @Data
@@ -33,11 +47,6 @@ public class InventoryItem {
 		
 		@ManyToOne
 		private ItemType type;
-		
-//		@Column
-//		private String priceSourceURL;
-//		@Column
-//		private String imgURL;
 		
 		@Column
 		private int quantity;

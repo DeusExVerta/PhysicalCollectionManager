@@ -21,14 +21,14 @@
 			</ul>
 		</div>
 		<div class="header" th:text="${Item.name}"></div>
-		<img class="itemPicture" src="Images/missingImg.jpg">
+		<img class="itemPicture" src="/Images/MissingImg.jpg"></img>
 		<div class="flex-and-center-column">
-			<p th:text="${Item.inventory.name}"></p>
-			<p th:text="${Item.type.name}"></p>
-			<p th:text="${Item.quantity}"></p>
-			<p th:text="${Item.quality}"></p>
-			<p th:text="${Item.location.name}"></p>
-			<p th:text="${Item.price}"></p>
+			<p>Containing Inventory: <text th:text="${Item.inventory.name}"></text></p>
+			<p>Item type: <text th:text="${Item.type.name}"></text></p>
+			<p>Quantity: <text th:text="${Item.quantity}"></text></p>
+			<p>Quality: <text th:text="${Item.quality}"></text></p>
+			<p>Location: <text th:text="${Item.location.name}"></text></p>
+			<p>Price: <text th:text="${Item.price}"></text></p>
 		</div>
 		<form class="delete-button" th:method="DELETE"
 			th:action="@{'/Items/'+${Item.name}}">

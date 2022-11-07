@@ -35,7 +35,9 @@ import com.Howard.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+/*
+ * Controller class focused on Single inventory operations.
+ */
 @Slf4j
 @Controller
 @AllArgsConstructor
@@ -49,6 +51,10 @@ public class SingleInventoryController {
 	
 	private InventoryItemService IiService;
 
+	
+	/*
+	 * handler method for handling adding locations for a user.
+	 */
 	@PutMapping("/Location")
 	public String addLocation(Principal principal, @ModelAttribute("location")Location location , @RequestHeader(value = HttpHeaders.REFERER, required = false) final String referrer) 
 	{
@@ -77,6 +83,10 @@ public class SingleInventoryController {
 		return "redirect:/Inventorys";
 	}
 	
+	
+	/*
+	 * handler method for handling deleting locations for a user.
+	 */
 	@DeleteMapping("/Location/{name}")
 	public String deleteLocation(Principal principal, @PathVariable("name") String name, @RequestHeader(value = HttpHeaders.REFERER, required = false) final String referrer) 
 	{
@@ -109,6 +119,9 @@ public class SingleInventoryController {
 		return "redirect:/Inventorys";
 	}
 	
+	/*
+	 * handler method for handling adding items to a collection.
+	 */
 	@PutMapping("/Inventorys/{name}/item")
 	public String addItem(Principal principal, @Valid @ModelAttribute("InventoryItem") InventoryItem item, @PathVariable("name")String inventoryName, @RequestParam("locationName") String locationName) 
 	{
@@ -138,6 +151,8 @@ public class SingleInventoryController {
 		{
 			log.info(String.format("Item %s exists in Inventory %s", item.getName(),inventory.getName()));
 			itemList.get(itemList.indexOf(item)).addQuantity(item.getQuantity());
+		}else{
+			itemList.add(item);
 		}
 		InService.save(inventory);
 		return String.format("redirect:/Inventorys/%s",inventoryName);
@@ -165,7 +180,7 @@ public class SingleInventoryController {
 			
 		}
 		InService.save(inventory);
-		return String.format("redirect:/Inventories/%s",inventoryName);
+		return String.format("redirect:/Inventorys/%s",inventoryName);
 	}
 	@GetMapping("/Inventorys/{inventoryName}/{itemName}")
 	public String viewItem(Model model, Principal principal, @PathVariable("inventoryName")String inventoryName, @PathVariable("itemName") String itemName) 

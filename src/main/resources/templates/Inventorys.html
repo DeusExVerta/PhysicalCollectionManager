@@ -19,10 +19,11 @@
 			</ul>
 		</div>
 	<header>Inventorys</header>
-	<div class="pages-label">Pages:
+	<div class="pages-contianer">Pages:
 	<div th:if="${!pages.isEmpty()}" th:each="pageNumber:${pages}">
 		<a th:text="${pageNumber}" th:href=@{/Inventorys(page=${pageNumber})}></a>
-	</div></div>
+	</div>
+	</div>
 	<table>
 		<thead>
 			<tr>

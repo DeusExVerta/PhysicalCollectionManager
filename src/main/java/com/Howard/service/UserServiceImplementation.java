@@ -76,9 +76,4 @@ public class UserServiceImplementation implements UserService {
         }
 	}
 	
-//	public void update(User user) 
-//	{
-//		userRepository.update(user);
-//	}
-
 }

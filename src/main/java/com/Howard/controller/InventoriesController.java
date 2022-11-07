@@ -40,13 +40,7 @@ public class InventoriesController {
 	@GetMapping("/Inventorys")
 	public String showInventorys(Model model, Principal principal, @RequestParam("page") Optional<Integer> page) 
 	{
-		User user = UsService.findByEmail(principal.getName());
-		if(user==null) 
-		{
-			String msg = "No user found with username "+principal.getName();
-			log.error(msg);
-			throw new UsernameNotFoundException(msg);
-		}
+		User user = userIfExists(principal.getName());
 		Page<Inventory> Inventorys = InService.findAll(user, PageRequest.of(page.orElse(1)-1,10));
 		log.info("Getting Inventorys page "+(page.orElse(1)-1)+" of "+Inventorys.getTotalPages());
 		model.addAttribute("Inventorys",Inventorys);
@@ -60,62 +54,52 @@ public class InventoriesController {
 	}
 	
 	@PutMapping("/Inventorys")
-	public String addInventory(Model model, Principal principal, @RequestParam("page")Optional<Integer> page, @RequestParam("name") String name, @RequestParam("itemType") String type) 
+	public String addInventory(Model model, Principal principal, @RequestParam("page")Optional<Integer> page, @RequestParam("name") String inventoryName, @RequestParam("itemType") String type) 
 	{
-		log.info(String.format("User %s adding Inventory %s with type %s",principal.getName(),name,type));
-		Inventory inventory = new Inventory();
-		User user = UsService.findByEmail(principal.getName());
-		if(user==null) 
+		if(inventoryName.isBlank()) 
 		{
-			String msg = "No user found with username "+principal.getName();
+			String msg = "Inventory name is blank";
 			log.error(msg);
-			throw new UsernameNotFoundException(msg);
-		}
-		if(ITService.existsByName(type) && user!=null && !name.isBlank()) 
-		{
-			inventory.setAllowedType(ITService.findByName(type));
-			inventory.setName(name);
-			inventory.setUser(user);
-		}else 
-		{
 			return "redirect:/Inventorys?error";
 		}
-		
-		InService.save(inventory);
-		return "redirect:/Inventorys";
+		Inventory inventory = new Inventory();
+		User user = userIfExists(principal.getName());
+		if(ITService.existsByName(type)) 
+		{
+			inventory.setAllowedType(ITService.findByName(type));
+			inventory.setName(inventoryName);
+			inventory.setUser(user);
+			log.info(String.format("User %s adding Inventory %s with type %s",principal.getName(),inventoryName,type));
+			InService.save(inventory);
+			return "redirect:/Inventorys";
+		}else 
+		{
+			log.error(String.format("", null));
+			return "redirect:/Inventorys?error";
+		}
 	}
 	
 	@DeleteMapping("/Inventorys/{name}")
-	public String deleteInventory(Model model,Principal principal, @PathVariable(value = "name") String name) 
+	public String deleteInventory(Model model,Principal principal, @PathVariable(value = "name") String inventoryName) 
 	{
-		User user = UsService.findByEmail(principal.getName());
-		if(user==null) 
-		{
-			String msg = "No user found with username "+principal.getName();
-			log.error(msg);
-			throw new UsernameNotFoundException(msg);
-		}
-		log.info(String.format("Found user %s, fetching Inventory",user.getEmail()));
-		Inventory inventory = InService.findByName(user, name);
+		User user = userIfExists(principal.getName());
+		
+		Inventory inventory = InService.findByName(user, inventoryName);
 		if(inventory==null) 
 		{
-			log.error(String.format("No Inventory found for user %s with name %s",user.getEmail(),name));
+			log.error(String.format("No Inventory found for user %s with name %s",user.getEmail(),inventoryName));
 			return "redirect:/Inventorys?error";
 		}
 		InService.delete(inventory);
 		return "redirect:/Inventorys";
 	}
+
+	
 	
 	@GetMapping("/Inventorys/{name}")
 	public String getSingleInventory(Model model, Principal principal, @PathVariable(value = "name") String name) 
 	{
-		User user = UsService.findByEmail(principal.getName());
-		if(user==null) 
-		{
-			String msg = "No user found with username "+principal.getName();
-			log.error(msg);
-			throw new UsernameNotFoundException(msg);
-		}
+		User user = userIfExists(principal.getName());
 		log.info(String.format("Found user %s, fetching Inventory %s",user.getEmail(),name));
 		Inventory inventory = InService.findByName(user, name);
 		if(inventory==null) 
@@ -132,23 +116,17 @@ public class InventoriesController {
 	}
 	
 	@PutMapping("/type")
-	public String addType(Model model, Principal principal, @RequestParam("name") String name) {
-		User user = UsService.findByEmail(principal.getName());
-		if(name.isBlank()) 
+	public String addType(Model model, Principal principal, @RequestParam("name") String typeName) {
+		if(typeName.isBlank()) 
 		{
 			return "redirect:/Inventorys?error";
 		}
-		if(user==null) 
-		{
-			String msg = "No user found with username "+principal.getName();
-			log.error(msg);
-			throw new UsernameNotFoundException(msg);
-		}
-		ItemType type = ITService.findByName(name);
+		User user = userIfExists(principal.getName());
+		ItemType type = ITService.findByName(typeName);
 		if(type==null) 
 		{
 			type=new ItemType();
-			type.setName(name);
+			type.setName(typeName);
 			type.setUser(new HashSet<User>());
 		}
 		type.getUser().add(user);
@@ -159,22 +137,31 @@ public class InventoriesController {
 	}
 	
 	@DeleteMapping("/type")
-	public String deleteType(Model model,Principal principal, @RequestParam("itemType") String name) 
+	public String deleteType(Model model,Principal principal, @RequestParam("itemType") String typeName) 
 	{
-		User user = UsService.findByEmail(principal.getName());
-		ItemType type = ITService.findByName(name);
-		if(user==null) 
-		{
-			String msg = "No user found with username "+principal.getName();
-			log.error(msg);
-			throw new UsernameNotFoundException(msg);
-		}
-		if(name.isBlank()||type==null||!user.getTypes().remove(type)) 
+		ItemType type = ITService.findByName(typeName);
+		User user = userIfExists(principal.getName());
+		if(type==null||!user.getTypes().remove(type)) 
 		{
 			return "redirect:/Inventorys?error";
 		}
 		UsService.save(user);
 		return "redirect:/Inventorys";
+	}
+	
+	/*
+	 * private utility functions
+	 */
+	private User userIfExists(String email) {
+		User user = UsService.findByEmail(email);
+		if(user==null) 
+		{
+			String msg = "No user found with username "+email;
+			log.error(msg);
+			throw new UsernameNotFoundException(msg);
+		}
+		log.info(String.format("Found user %s",user.getEmail()));
+		return user;
 	}
 	
 }
