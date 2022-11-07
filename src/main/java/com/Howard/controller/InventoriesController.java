@@ -54,7 +54,7 @@ public class InventoriesController {
 	}
 	
 	@PutMapping("/Inventorys")
-	public String addInventory(Model model, Principal principal, @RequestParam("page")Optional<Integer> page, @RequestParam("name") String inventoryName, @RequestParam("itemType") String type) 
+	public String addInventory(Model model, Principal principal, @RequestParam("page")Optional<Integer> page, @RequestParam("name") String inventoryName, @RequestParam("itemType") String typeName) 
 	{
 		if(inventoryName.isBlank()) 
 		{
@@ -64,17 +64,18 @@ public class InventoriesController {
 		}
 		Inventory inventory = new Inventory();
 		User user = userIfExists(principal.getName());
-		if(ITService.existsByName(type)) 
+		ItemType type = ITService.findByName(typeName);
+		if(type!=null) 
 		{
-			inventory.setAllowedType(ITService.findByName(type));
+			inventory.setAllowedType(type);
 			inventory.setName(inventoryName);
 			inventory.setUser(user);
-			log.info(String.format("User %s adding Inventory %s with type %s",principal.getName(),inventoryName,type));
+			log.info(String.format("User %s adding Inventory %s with type %s",principal.getName(),inventoryName,typeName));
 			InService.save(inventory);
 			return "redirect:/Inventorys";
 		}else 
 		{
-			log.error(String.format("", null));
+			log.error(String.format("Type %s does not exist", typeName, principal.getName()));
 			return "redirect:/Inventorys?error";
 		}
 	}
